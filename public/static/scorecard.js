@@ -1,3 +1,5 @@
+const DEV_MODE = false;
+
 const SCORE_TYPES = [
     {
         'scoreHint': 'Amount on Cards',
@@ -26,7 +28,11 @@ class Player {
     _initCategories() {
         SCORE_TYPES.forEach((scoreType) => {
             scoreType.categories.forEach((category) => {
-                this.pointsByCategory[category] = 0;
+                if (DEV_MODE) {
+                    this.pointsByCategory[category] = Math.floor(Math.random() * 20);
+                } else {
+                    this.pointsByCategory[category] = 0;
+                }
             });
         });
     }
