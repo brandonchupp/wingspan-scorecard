@@ -1,8 +1,8 @@
 # Windspan Scorecard
 
-A scorecard for the popular game [Wingspan](https://en.wikipedia.org/wiki/Wingspan_(board_game)). This scorecard is in no way affiliated with Wingspan or Stonemaier Games.
+A scorecard for the popular game [Wingspan](https://en.wikipedia.org/wiki/Wingspan_(board_game)).
 
-Use this scorecard to quickly enter scores and calculate the total points for each player.
+Use this scorecard to quickly enter scores and calculate the total points for each player. This scorecard is in no way affiliated with Wingspan or Stonemaier Games.
 
 ## Getting Started
 
