@@ -196,6 +196,14 @@ class Scorecard {
     }
 }
 
+function getEscapedValue(value) {
+    return value.replace(/&/g, '')
+        .replace(/"/g, '')
+        .replace(/'/g, '')
+        .replace(/</g, '')
+        .replace(/>/g, '');
+}
+
 function getPlayerNamesFromURL() {
     let queryParams = (new URL(document.location)).searchParams;
     return JSON.parse(queryParams.get('players'));
@@ -206,14 +214,14 @@ function getPlayers() {
     if ('players' in localStorage) {
         let savedPlayers = JSON.parse(localStorage.getItem('players'));
         savedPlayers.forEach((savedPlayer) => {
-            let player = new Player(savedPlayer.name);
+            let player = new Player(getEscapedValue(savedPlayer.name));
             player.pointsByCategory = savedPlayer.pointsByCategory;
             players.push(player);
         });
     } else {
         let playerNames = getPlayerNamesFromURL();
         playerNames.forEach((playerName) => {
-            players.push(new Player(playerName));
+            players.push(new Player(getEscapedValue(playerName)));
         });
     }
     return players;
