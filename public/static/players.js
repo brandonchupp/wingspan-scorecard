@@ -55,6 +55,9 @@ function toggleContinueButtonState() {
 }
 
 function continueButtonClick() {
+    // Clear any older players
+    localStorage.removeItem('players');
+
     let playersString = JSON.stringify(players);
     window.location = `/scorecard/?players=${encodeURIComponent(playersString)}`;
 }
