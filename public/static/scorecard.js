@@ -219,10 +219,37 @@ function getPlayers() {
     return players;
 }
 
+function clickNewGame() {
+    var modal = new Modal();
+    modal.setBody('<p>Are you sure you want to start a new scorecard?</p>');
+    modal.setFooter(
+        '<button class="modal-close secondary">Cancel</button>'
+                + `<button id="confirm-new-game">New Game</button>`
+    )
+    modal.show();
+
+    document.querySelector('#modal .modal-close').addEventListener(
+        'click', (event) => {
+            modal.hide();
+        }, false
+    );
+
+    document.querySelector('#modal #confirm-new-game').addEventListener(
+        'click', (event) => {
+            localStorage.removeItem('players');
+            window.location = '/';
+        }, false
+    );
+}
+
 function buildScorecard() {
     let players = getPlayers();
     let scorecard = new Scorecard(`#scorecard`, players);
     scorecard.render();
+
+    document.querySelector('#new-game').addEventListener(
+        'click', clickNewGame, false
+    );
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -49,6 +49,12 @@
     font-size: 1.3rem;
 }
 
+#new-game {
+    padding: 7px 15px;
+    width: auto;
+    margin-top: 3rem;
+}
+
 .modal-body .update-player-points {
     display: flex;
     justify-content: center;
@@ -65,4 +71,17 @@
     max-width: 8rem;
     margin-left: 2rem;
     margin-bottom: 0;
+}
+
+/* Modals */
+#modal footer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+#modal footer button {
+    margin-left: 1rem;
+    margin-bottom: 0;
+    width: auto;
 }
