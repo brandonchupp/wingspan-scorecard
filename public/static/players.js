@@ -49,10 +49,18 @@ function toggleContinueButtonState() {
     }
 }
 
+function continueButtonClick() {
+    let playersString = JSON.stringify(players);
+    window.location = `/scorecard/?players=${encodeURIComponent(playersString)}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Add an initial player input
     addNewPlayerInput();
     document.querySelector('#add-player').addEventListener(
         'click', addNewPlayer, false
+    );
+    document.querySelector('#build-scorecard').addEventListener(
+        'click', continueButtonClick, false
     );
 }, false);
