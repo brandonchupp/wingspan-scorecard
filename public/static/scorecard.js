@@ -19,24 +19,33 @@ const SCORE_TYPES = [
 class Player {
     constructor(name) {
         this.name = name;
-        this.points = 0;
+        this.pointsByCategory = {};
+        this._initCategories();
     }
 
-    addPoints(points) {
-        this.points += points;
+    _initCategories() {
+        SCORE_TYPES.forEach((scoreType) => {
+            scoreType.categories.forEach((category) => {
+                this.pointsByCategory[category] = 0;
+            });
+        });
     }
-    getPoints(points) {
-        return this.points
+    addPoints(points, category){
+        return this.pointsByCategory[category] += points;
+    }
+
+    getPoints(category){
+        return this.pointsByCategory[category];
+    }
+
+    getTotalPoints(){
+        return Object.values(this.pointsByCategory).reduce((p1, p2) => p1 + p2);
     }
 }
 class Scorecard {
     constructor(tableSelector, players) {
         this.table = document.querySelector(tableSelector);
         this.players = players;
-    }
-
-    _getPlayerTDs() {
-        return '<td></td>'.repeat(this.players.length);
     }
 
     _renderHeader() {
@@ -56,10 +65,15 @@ class Scorecard {
                 rendered += '<tr>';
                 if (index === 0) {
                     // Add score hint on the first category
-                    rendered += `<td rowspan="3" class="score-type">${scoreType.scoreHint}</td>`;
+                    rendered += (
+                        '<td rowspan="3"><div class="score-type">'
+                                + `${scoreType.scoreHint}</div></td>`
+                    );
                 }
                 rendered += `<td>${category}</td>`;
-                rendered += this._getPlayerTDs();
+                this.players.forEach((player) => {
+                    rendered += `<td>${player.getPoints(category)}</td>`
+                });
                 rendered += '</tr>'
             });
         });
@@ -69,7 +83,9 @@ class Scorecard {
 
     _renderFooter() {
         let rendered = '<tfoot><td></td><td>Total</td>';
-        rendered += this._getPlayerTDs();
+        this.players.forEach((player) => {
+            rendered += `<td>${player.getTotalPoints()}</td>`
+        });
         rendered += '</tfoot>';
         return rendered;
     }
@@ -106,7 +122,7 @@ function getPlayers() {
 function buildScorecard() {
     let players = getPlayers();
     let scorecard = new Scorecard(`#scorecard`, players);
-    console.log(scorecard.render())
+    scorecard.render();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
