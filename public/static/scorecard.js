@@ -53,6 +53,7 @@ class Scorecard {
         this.table = document.querySelector(tableSelector);
         this.players = players;
         this.modal = new Modal();
+        this.showTotals = false;
     }
 
     showScores(category) {
@@ -125,10 +126,29 @@ class Scorecard {
     }
 
     _renderFooter() {
-        let rendered = '<tfoot><td></td><td>Total</td>';
-        this.players.forEach((player) => {
-            rendered += `<td>${player.getTotalPoints()}</td>`
-        });
+        let rendered = '<tfoot><td></td>';
+
+        if (this.showTotals) {
+            rendered += (
+                '<td><label for="totalsSwitch">'
+                        + '<input type="checkbox" id="totalsSwitch" '
+                        + 'name="totalsSwitch" role="switch" checked>'
+                        + 'Total</label></td>'
+            );
+            this.players.forEach((player) => {
+                rendered += `<td>${player.getTotalPoints()}</td>`;
+            });
+        } else {
+            rendered += (
+                '<td><label for="totalsSwitch">'
+                        + '<input type="checkbox" id="totalsSwitch" '
+                        + 'name="totalsSwitch" role="switch">'
+                        + 'Total</label></td>'
+            );
+            this.players.forEach((player) => {
+                rendered += '<td></td>';
+            });
+        }
         rendered += '</tfoot>';
         return rendered;
     }
@@ -141,6 +161,13 @@ class Scorecard {
                 }, false
             );
         });
+
+        this.table.querySelector('#totalsSwitch').addEventListener(
+            'click', (event) => {
+                this.showTotals = !this.showTotals;
+                this.render();
+            }, false
+        );
     }
 
     _render() {
