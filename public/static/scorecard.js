@@ -86,7 +86,9 @@ class Scorecard {
         let category = document.querySelector("#score-category").dataset.category;
         this.players.forEach((player) => {
             let newScore = parseInt(document.querySelector(`input[name="${player.name}"]`).value);
-            player.setPoints(category, newScore);
+            if (newScore >= 0 && newScore < 999) {
+                player.setPoints(category, newScore);
+            }
         });
         this.modal.hide();
         this.render();
