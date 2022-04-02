@@ -13,6 +13,7 @@ function addNewPlayerInput() {
         toggleAddPlayerButtonState();
     })
     toggleAddPlayerButtonState();
+    toggleContinueButtonState();
 }
 
 function addNewPlayer() {
@@ -36,6 +37,15 @@ function toggleAddPlayerButtonState() {
         addPlayerButton.removeAttribute('disabled');
     } else {
         addPlayerButton.setAttribute('disabled', true);
+    }
+}
+
+function toggleContinueButtonState() {
+    let continueButton = document.querySelector('#build-scorecard');
+    if (players.length > 1) {
+        continueButton.style.display = '';
+    } else {
+        continueButton.style.display = 'none';
     }
 }
 

@@ -17,6 +17,7 @@
 
 .title {
     font-size: 3rem;
+    margin-bottom: .5rem;
 }
 
 #players .player-name {
