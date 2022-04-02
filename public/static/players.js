@@ -8,10 +8,15 @@ function addNewPlayerInput() {
     let playersContainer = document.querySelector('#players');
     let addPlayerButton = playersContainer.querySelector('#add-player');
     playersContainer.insertBefore(addPlayerInput, addPlayerButton);
+    playersContainer.querySelector('input').focus();
 
-    playersContainer.querySelector('#new-player-name').addEventListener('input', () => {
+    playersContainer.querySelector('#new-player-name').addEventListener('keyup', (event) => {
         toggleAddPlayerButtonState();
-    })
+        let playerNameInputValue = document.querySelector('#new-player-name').value.trim();
+        if (event.keyCode === 13 && playerNameInputValue) {
+            addNewPlayer();
+        }
+    });
     toggleAddPlayerButtonState();
     toggleContinueButtonState();
 }
