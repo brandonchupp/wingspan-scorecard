@@ -36,8 +36,8 @@ class Player {
             });
         });
     }
-    addPoints(points, category){
-        return this.pointsByCategory[category] += points;
+    setPoints(category, points){
+        return this.pointsByCategory[category] = points;
     }
 
     getPoints(category){
@@ -52,6 +52,43 @@ class Scorecard {
     constructor(tableSelector, players) {
         this.table = document.querySelector(tableSelector);
         this.players = players;
+        this.modal = new Modal();
+    }
+
+    showScores(category) {
+        this.modal.setTitle(`"${category}" Scoring`);
+
+        let modalBody = `<div id="score-category" data-category="${category}">`;
+        this.players.forEach((player) => {
+            modalBody += `<div class="update-player-points">
+                <div>${player.name}</div>
+                <input name="${player.name}"
+                    value="${player.getPoints(category)}"
+                    min="0" max="999"
+                    type="number" pattern="\d*"/>
+                </div>`;
+        });
+
+        modalBody += '</div>';
+        this.modal.setBody(modalBody);
+        this.modal.setFooter('<button type="button">Update</button>');
+        this.modal.show();
+
+        document.querySelector('#modal footer button').addEventListener(
+            'click', () => {
+                this._updateScores()
+            }, false
+        );
+    }
+
+    _updateScores() {
+        let category = document.querySelector("#score-category").dataset.category;
+        this.players.forEach((player) => {
+            let newScore = parseInt(document.querySelector(`input[name="${player.name}"]`).value);
+            player.setPoints(category, newScore);
+        });
+        this.modal.hide();
+        this.render();
     }
 
     _renderHeader() {
@@ -76,7 +113,7 @@ class Scorecard {
                                 + `${scoreType.scoreHint}</div></td>`
                     );
                 }
-                rendered += `<td>${category}</td>`;
+                rendered += `<td class="category">${category}</td>`;
                 this.players.forEach((player) => {
                     rendered += `<td>${player.getPoints(category)}</td>`
                 });
@@ -96,6 +133,16 @@ class Scorecard {
         return rendered;
     }
 
+    _addEventListeners() {
+        this.table.querySelectorAll('.category').forEach((category) => {
+            category.addEventListener(
+                'click', (event) => {
+                    this.showScores(event.target.innerText);
+                }, false
+            );
+        });
+    }
+
     _render() {
         return [
             '<table>',
@@ -108,6 +155,7 @@ class Scorecard {
 
     render() {
         this.table.innerHTML = this._render();
+        this._addEventListeners();
     }
 }
 

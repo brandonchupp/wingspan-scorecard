@@ -44,6 +44,24 @@
 
 #scorecard .score-type {
     border-right: var(--border-width) solid var(--table-border-color);
-    writing-mode: sideways-lr;
+    writing-mode: sideways-rl;
     font-size: 1.3rem;
+}
+
+.modal-body .update-player-points {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.modal-body .update-player-points div {
+    font-family: CardenioModern;
+    font-size: 2rem;
+}
+
+.modal-body .update-player-points input {
+    max-width: 8rem;
+    margin-left: 2rem;
+    margin-bottom: 0;
 }
