@@ -1,3 +1,8 @@
+:root {
+    --primary: green !important;
+    --primary-hover: darkgreen !important;
+}
+
 @font-face {
     font-family: CardenioModern;
     src: url("/static/CardenioModern-Regular.otf") format("opentype");
@@ -38,15 +43,25 @@
 }
 
 #scorecard table tfoot tr:last-child td {
-    border-top: 4px solid var(--table-border-color);
+    border-top: 4px solid lightgray;
     border-bottom: none;
     font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#scorecard table td {
+    border: none;
 }
 
 #scorecard .score-type {
-    border-right: var(--border-width) solid var(--table-border-color);
-    writing-mode: sideways-rl;
-    font-size: 1.3rem;
+    border-top: 5px solid white;
+    font-size: 1rem;
+    padding-bottom: 0;
+}
+
+#scorecard .player-points {
+    text-align: center;
 }
 
 #new-game {
@@ -57,20 +72,31 @@
 
 .modal-body .update-player-points {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     margin-bottom: 2rem;
 }
 
 .modal-body .update-player-points div {
     font-family: CardenioModern;
     font-size: 2rem;
+    width: 100%;
+    text-align: right;
 }
 
 .modal-body .update-player-points input {
-    max-width: 8rem;
+    width: 8rem;
     margin-left: 2rem;
     margin-bottom: 0;
+    caret-color: transparent;
+    font-size: 1.2rem;
+}
+
+.light-blue {
+    background-color: #daeaf6;
+}
+
+.light-green {
+    background-color: #ddedea;
 }
 
 /* Modals */

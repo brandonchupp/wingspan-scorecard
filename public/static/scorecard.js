@@ -3,6 +3,7 @@ const DEV_MODE = false;
 const SCORE_TYPES = [
     {
         'scoreHint': 'Amount on Cards',
+        'classes': 'light-blue',
         'categories': [
             'Birds',
             'Bonus Cards',
@@ -10,6 +11,7 @@ const SCORE_TYPES = [
         ]
     }, {
         'scoreHint': '1 Point Each',
+        'classes': 'light-green',
         'categories': [
             'Eggs',
             'Food on Cards',
@@ -66,7 +68,7 @@ class Scorecard {
                 <input name="${player.name}"
                     value="${player.getPoints(category)}"
                     min="0" max="999"
-                    type="number" pattern="\d*"/>
+                    type="number" pattern="[0-9]*"/>
                 </div>`;
         });
 
@@ -107,18 +109,18 @@ class Scorecard {
         let rendered = '<tbody>';
         SCORE_TYPES.forEach((scoreType) => {
             let rowSpan = scoreType.categories.length;
-            scoreType.categories.forEach((category, index) => {
-                rendered += '<tr>';
-                if (index === 0) {
-                    // Add score hint on the first category
-                    rendered += (
-                        '<td rowspan="3"><div class="score-type">'
-                                + `${scoreType.scoreHint}</div></td>`
-                    );
-                }
-                rendered += `<td class="category">${category}</td>`;
+            // Add score hint on an empty row
+            rendered += (`<tr class="${scoreType.classes}">
+                <td colspan="${2 + this.players.length}"
+                    class="score-type ${scoreType.classes}">
+                ${scoreType.scoreHint}</td></tr>`
+            );
+            scoreType.categories.forEach((category) => {
+                rendered += `<tr class="${scoreType.classes}">`;
+                rendered += '<td></td>';
+                rendered += `<td><a href="#" class="category">${category}</a></td>`;
                 this.players.forEach((player) => {
-                    rendered += `<td>${player.getPoints(category)}</td>`
+                    rendered += `<td class="player-points">${player.getPoints(category)}</td>`
                 });
                 rendered += '</tr>'
             });
@@ -159,6 +161,7 @@ class Scorecard {
         this.table.querySelectorAll('.category').forEach((category) => {
             category.addEventListener(
                 'click', (event) => {
+                    event.preventDefault();
                     this.showScores(event.target.innerText);
                 }, false
             );
