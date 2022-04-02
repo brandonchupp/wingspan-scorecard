@@ -18,3 +18,13 @@
 .title {
     font-size: 3rem;
 }
+
+#players .player-name {
+    font-family: CardenioModern;
+    font-size: 2rem;
+    text-align: center;
+}
+
+#players #new-player-name {
+    margin-top: 2rem;
+}
