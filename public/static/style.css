@@ -2,3 +2,19 @@
     font-family: CardenioModern;
     src: url("/static/CardenioModern-Regular.otf") format("opentype");
 }
+
+.container {
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ws-font {
+    font-family: CardenioModern;
+}
+
+.title {
+    font-size: 3rem;
+}
