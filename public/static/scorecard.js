@@ -183,6 +183,16 @@ class Scorecard {
     render() {
         this.table.innerHTML = this._render();
         this._addEventListeners();
+        this._saveToLocalStorage();
+    }
+
+    _saveToLocalStorage() {
+        // Store the players state to local browser storage. We'll
+        // try to reinstantiate on refresh.
+        localStorage.setItem(
+            'players',
+            JSON.stringify(this.players)
+        );
     }
 }
 
@@ -192,11 +202,20 @@ function getPlayerNamesFromURL() {
 }
 
 function getPlayers() {
-    let playerNames = getPlayerNamesFromURL();
     let players = [];
-    playerNames.forEach((playerName) => {
-        players.push(new Player(playerName));
-    });
+    if ('players' in localStorage) {
+        let savedPlayers = JSON.parse(localStorage.getItem('players'));
+        savedPlayers.forEach((savedPlayer) => {
+            let player = new Player(savedPlayer.name);
+            player.pointsByCategory = savedPlayer.pointsByCategory;
+            players.push(player);
+        });
+    } else {
+        let playerNames = getPlayerNamesFromURL();
+        playerNames.forEach((playerName) => {
+            players.push(new Player(playerName));
+        });
+    }
     return players;
 }
 
