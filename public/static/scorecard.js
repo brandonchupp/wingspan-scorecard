@@ -238,6 +238,7 @@ function getPlayers() {
 
 function clickNewGame() {
     var modal = new Modal();
+    modal.setTitle('');
     modal.setBody('<p>Are you sure you want to start a new scorecard?</p>');
     modal.setFooter(
         '<button class="modal-close secondary">Cancel</button>'
