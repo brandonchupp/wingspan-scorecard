@@ -63,10 +63,14 @@ class Scorecard {
 
         let modalBody = `<div id="score-category" data-category="${category}">`;
         this.players.forEach((player) => {
+            let currentScore = player.getPoints(category);
+            if (currentScore === 0) {
+                currentScore = '';
+            }
             modalBody += `<div class="update-player-points">
                 <div>${player.name}</div>
                 <input name="${player.name}"
-                    value="${player.getPoints(category)}"
+                    value="${currentScore}"
                     min="0" max="999"
                     type="number" pattern="[0-9]*"/>
                 </div>`;
